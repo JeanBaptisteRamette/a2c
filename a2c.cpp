@@ -21,7 +21,9 @@ DWORD WINAPI ThreadEntry(HMODULE HandleModule)
     a2c::LogFmtString("ImageBase:  {}\n", (void*)ImageBase);
     a2c::LogFmtString("PlayerAddr: {}\n", (void*)Player);
 
-    a2c::GameConOut("Message from a2c.dll");
+    a2c::PrintGameConsole("Hello from a2c.dll {}", 1);
+    a2c::PrintGameConsole("Hello from a2c.dll {}", 2);
+    a2c::PrintGameConsole("Hello from a2c.dll {}", 3);
 
     while (true)
     {

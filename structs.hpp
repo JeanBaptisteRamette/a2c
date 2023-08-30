@@ -1,7 +1,10 @@
 #ifndef A2C_STRUCTS_HPP
 #define A2C_STRUCTS_HPP
 
+#include <string_view>
 #include <cstdint>
+#include <format>
+
 #include "memory.hpp"
 #include "symbol.hpp"
 
@@ -32,6 +35,14 @@ namespace a2c
     using namespace a2c::literals;
 
     Symbol<void(const char*)> GameConOut(0xDAD50_r);
+
+
+    template<typename ...Args>
+    inline void PrintGameConsole(std::string_view fmt, Args&&... args)
+    {
+        const auto out = std::vformat(fmt, std::make_format_args(args...));
+        GameConOut(out.c_str());
+    }
 }
 
 
