@@ -4,16 +4,21 @@
 #include <windows.h>
 #include <cstdint>
 
+#define RELOCATE(RVA) (uintptr_t)(PebImageBase() + (RVA))
+
 namespace a2c
 {
-    enum OffsetType
-    {
-        LOCAL_PLAYER_PTR = 0x18AC00
-    };
-
     inline LPBYTE PebImageBase()
     {
         return reinterpret_cast<LPBYTE>(GetModuleHandleW(nullptr));
+    }
+
+    namespace literals
+    {
+        inline uintptr_t operator ""_r(unsigned long long int Rva)
+        {
+            return RELOCATE(Rva);
+        }
     }
 }
 

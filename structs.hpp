@@ -2,6 +2,8 @@
 #define A2C_STRUCTS_HPP
 
 #include <cstdint>
+#include "memory.hpp"
+#include "symbol.hpp"
 
 
 namespace a2c
@@ -26,6 +28,10 @@ namespace a2c
 
         int32_t Health; //0x00EC
     }; //Size: 0x0440
+
+    using namespace a2c::literals;
+
+    Symbol<void(const char*)> GameConOut(0xDAD50_r);
 }
 
 

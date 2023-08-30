@@ -5,6 +5,7 @@
 #include "utils.hpp"
 
 using namespace std::chrono_literals;
+using namespace a2c::literals;
 
 
 DWORD WINAPI ThreadEntry(HMODULE HandleModule)
@@ -13,19 +14,19 @@ DWORD WINAPI ThreadEntry(HMODULE HandleModule)
         return 1;
 
     const auto ImageBase  = a2c::PebImageBase();
-    const auto PlayerAddr = *(void**)(ImageBase + a2c::LOCAL_PLAYER_PTR);
 
+    const auto PlayerAddr = *(void**)(0x18AC00_r);
     auto* Player = reinterpret_cast<a2c::LOCAL_PLAYER*>(PlayerAddr);
 
     a2c::LogFmtString("ImageBase:  {}\n", (void*)ImageBase);
-    a2c::LogFmtString("PlayerAddr: {}\n", (void*)PlayerAddr);
+    a2c::LogFmtString("PlayerAddr: {}\n", (void*)Player);
+
+    a2c::GameConOut("Message from a2c.dll");
 
     while (true)
     {
         if (GetAsyncKeyState(VK_DELETE) & 1)
             break;
-
-        Player->Health = 50;
 
         std::this_thread::sleep_for(500ms);
     }
