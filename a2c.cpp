@@ -3,6 +3,7 @@
 #include "console.hpp"
 #include "memory.hpp"
 #include "utils.hpp"
+#include "mods.hpp"
 
 using namespace std::chrono_literals;
 using namespace a2c::literals;
@@ -24,6 +25,8 @@ DWORD WINAPI ThreadEntry(HMODULE HandleModule)
     a2c::PrintGameConsole("Hello from a2c.dll {}", 1);
     a2c::PrintGameConsole("Hello from a2c.dll {}", 2);
     a2c::PrintGameConsole("Hello from a2c.dll {}", 3);
+
+    a2c::SetWindowTitle("AC Mod");
 
     while (true)
     {

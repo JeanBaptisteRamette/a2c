@@ -5,6 +5,8 @@
 #include <iostream>
 #include <format>
 
+#include <windows.h>
+
 
 namespace a2c
 {
@@ -18,6 +20,21 @@ namespace a2c
     inline void LogErrFmtString(std::string_view fmt, Args&&... args)
     {
         std::cerr << std::vformat(fmt, std::make_format_args(args...));
+    }
+
+    namespace nt
+    {
+        template<typename ProcType>
+        ProcType ResolveAPI(std::wstring_view ModuleName, std::string_view ProcedureName)
+        {
+            HMODULE Module = GetModuleHandleW(ModuleName.data());
+
+            if (!Module)
+                return nullptr;
+
+            FARPROC Procedure = GetProcAddress(Module, ProcedureName.data());
+            return reinterpret_cast<ProcType>(Procedure);
+        }
     }
 }
 

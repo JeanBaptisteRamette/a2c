@@ -15,15 +15,18 @@ namespace a2c
         public:
             explicit BaseSymbol(uintptr_t SymAddr) : SymAddress(SymAddr) {}
 
-            T *Pointer() const {
+            T* Pointer() const
+            {
                 return reinterpret_cast<T *>(SymAddress);
             }
 
-            explicit operator T *() const {
+            explicit operator T *() const
+            {
                 return Pointer();
             }
 
-            T *operator->() const {
+            T* operator -> () const
+            {
                 return Pointer();
             }
 

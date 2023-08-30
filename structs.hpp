@@ -34,12 +34,12 @@ namespace a2c
 
     using namespace a2c::literals;
 
-    Symbol<void(const char*)> GameConOut(0xDAD50_r);
-
+    const Symbol<void*> SDL_Window(0x585870);
 
     template<typename ...Args>
     inline void PrintGameConsole(std::string_view fmt, Args&&... args)
     {
+        Symbol<void(const char* OutputString)> GameConOut(0xDAD50_r);
         const auto out = std::vformat(fmt, std::make_format_args(args...));
         GameConOut(out.c_str());
     }
