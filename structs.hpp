@@ -14,32 +14,38 @@ namespace a2c
     struct LOCAL_PLAYER
     {
         char pad_0000[28]; //0x0000
-
         float AccelX; //0x001C
         float AccelY; //0x0020
         float AccelZ; //0x0024
-
         float PosX; //0x0028
         float PosY; //0x002C
         float PosZ; //0x0030
-
         float ViewYaw; //0x0034
         float ViewPitch; //0x0038
         float ViewRoll; //0x003C
-
-        char pad_0040[172]; //0x0040
-
+        char pad_0040[48]; //0x0040
+        int16_t N0000006B; //0x0070
+        int16_t TimeInAir; //0x0072
+        int16_t unknown; //0x0074
+        int16_t State; //0x0076
+        char pad_0078[116]; //0x0078
         int32_t Health; //0x00EC
-    }; //Size: 0x0440
+        int32_t Armor; //0x00F0
+        char pad_00F4[548]; //0x00F4
+        int32_t SpectateMode; //0x0318
+        char pad_031C[296]; //0x031C
+    }; //Size: 0x0444
 
     using namespace a2c::literals;
 
+    inline Symbol<LOCAL_PLAYER> LocalPlayer(*(uintptr_t*)0x18AC00_r);
     const Symbol<void*> SDL_Window(0x585870);
+    const Symbol<void(void(*Callback)(), const char* Name, const char* Signature)> RegisterConsoleCommand(0xD69C0_r);
+    const Symbol<void(const char* OutputString)> GameConOut(0xDAD50_r);
 
     template<typename ...Args>
     inline void PrintGameConsole(std::string_view fmt, Args&&... args)
     {
-        Symbol<void(const char* OutputString)> GameConOut(0xDAD50_r);
         const auto out = std::vformat(fmt, std::make_format_args(args...));
         GameConOut(out.c_str());
     }

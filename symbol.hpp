@@ -13,7 +13,7 @@ namespace a2c
         class BaseSymbol
         {
         public:
-            explicit BaseSymbol(uintptr_t SymAddr) : SymAddress(SymAddr) {}
+            BaseSymbol(uintptr_t SymAddr) : SymAddress(SymAddr) {}
 
             T* Pointer() const
             {
@@ -48,7 +48,7 @@ namespace a2c
 
         using details::BaseSymbol<FunctionType>::BaseSymbol;
 
-        T operator()(Args... args)
+        T operator()(Args... args) const
         {
             return static_cast<FunctionType*>(this->Pointer())(args...);
         }

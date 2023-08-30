@@ -11,32 +11,30 @@ using namespace a2c::literals;
 
 DWORD WINAPI ThreadEntry(HMODULE HandleModule)
 {
-    if (!a2c::ConsoleCreate())
+    using namespace a2c;
+
+    if (!ConsoleCreate())
         return 1;
 
-    const auto ImageBase  = a2c::PebImageBase();
+    LogFmtString("ImageBase:   {}\n", (void*)PebImageBase());
+    LogFmtString("PlayerBase:  {}\n", (void*)LocalPlayer.Pointer());
 
-    const auto PlayerAddr = *(void**)(0x18AC00_r);
-    auto* Player = reinterpret_cast<a2c::LOCAL_PLAYER*>(PlayerAddr);
+    SetWindowTitle("AC Mod");
+    PrintGameConsole("Hello from a2c.dll");
+    ExtendScriptCommands();
 
-    a2c::LogFmtString("ImageBase:  {}\n", (void*)ImageBase);
-    a2c::LogFmtString("PlayerAddr: {}\n", (void*)Player);
-
-    a2c::PrintGameConsole("Hello from a2c.dll {}", 1);
-    a2c::PrintGameConsole("Hello from a2c.dll {}", 2);
-    a2c::PrintGameConsole("Hello from a2c.dll {}", 3);
-
-    a2c::SetWindowTitle("AC Mod");
 
     while (true)
     {
         if (GetAsyncKeyState(VK_DELETE) & 1)
             break;
 
+        LocalPlayer->Health = 50;
+
         std::this_thread::sleep_for(500ms);
     }
 
-    a2c::ConsoleDestroy();
+    ConsoleDestroy();
 
     // Unload DLL and stops the thread
     FreeLibraryAndExitThread(HandleModule, 0);

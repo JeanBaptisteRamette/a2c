@@ -1,8 +1,28 @@
 #include "structs.hpp"
-#include "symbol.hpp"
 #include "utils.hpp"
 #include "mods.hpp"
 
+
+namespace a2c::Scr
+{
+    void CbSetWinTitle(const char* Title)
+    {
+        SetWindowTitle(Title);
+    }
+
+    void CbEjectMod()
+    {
+        LogFmtString("Ejecting mod...");
+    }
+
+    void CbToggleFly()
+    {
+        if (LocalPlayer->SpectateMode != 5)
+            LocalPlayer->SpectateMode = 5;
+        else
+            LocalPlayer->SpectateMode = 0;
+    }
+}
 
 namespace a2c
 {
@@ -14,5 +34,12 @@ namespace a2c
 
         if (SDL_SetWindowTitle)
             SDL_SetWindowTitle(*SDL_Window.Pointer(), Title.data());
+    }
+
+    void ExtendScriptCommands()
+    {
+        RegisterConsoleCommand((void (*)())Scr::CbSetWinTitle, "wintitle", "s");
+        RegisterConsoleCommand(Scr::CbEjectMod, "eject", "");
+        RegisterConsoleCommand(Scr::CbToggleFly, "fly", "");
     }
 }
