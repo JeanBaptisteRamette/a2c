@@ -7,6 +7,11 @@
 
 namespace a2c
 {
+    namespace Hks
+    {
+        void StubGameConOut(const char* OutputString);
+    }
+
     void SetWindowTitle(std::string_view Title);
 
     void ExtendScriptCommands();

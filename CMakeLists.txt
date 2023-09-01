@@ -9,6 +9,5 @@ add_library(a2c SHARED
         structs.hpp
         memory.hpp
         utils.hpp
-        detour.cpp detour.hpp
         symbol.hpp
-        mods.hpp mods.cpp)
+        mods.hpp mods.cpp detour.cpp detour.hpp)

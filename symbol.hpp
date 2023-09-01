@@ -17,7 +17,7 @@ namespace a2c
 
             T* Pointer() const
             {
-                return reinterpret_cast<T *>(SymAddress);
+                return reinterpret_cast<T*>(SymAddress);
             }
 
             explicit operator T *() const

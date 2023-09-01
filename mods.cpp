@@ -2,6 +2,18 @@
 #include "utils.hpp"
 #include "mods.hpp"
 
+#define CMD_CALLBACK(f) (void(*)())(f)
+
+using namespace a2c::literals;
+
+namespace a2c::Hks
+{
+    void StubGameConOut(const char* OutputString)
+    {
+        LogFmtString("GameConOut: {}\n", OutputString);
+    }
+}
+
 
 namespace a2c::Scr
 {
@@ -22,6 +34,14 @@ namespace a2c::Scr
         else
             LocalPlayer->SpectateMode = 0;
     }
+
+    void CbDumpCommands(const char* OutputFile)
+    {
+        if (!OutputFile)
+            return;
+
+        // Traversing the hashmap is hard, debug the game first
+    }
 }
 
 namespace a2c
@@ -38,8 +58,9 @@ namespace a2c
 
     void ExtendScriptCommands()
     {
-        RegisterConsoleCommand((void (*)())Scr::CbSetWinTitle, "wintitle", "s");
-        RegisterConsoleCommand(Scr::CbEjectMod, "eject", "");
-        RegisterConsoleCommand(Scr::CbToggleFly, "fly", "");
+        RegisterConsoleCommand(CMD_CALLBACK(Scr::CbSetWinTitle),  "wintitle", "s");
+        RegisterConsoleCommand(CMD_CALLBACK(Scr::CbEjectMod),     "eject", "");
+        RegisterConsoleCommand(CMD_CALLBACK(Scr::CbToggleFly),    "fly", "");
+        RegisterConsoleCommand(CMD_CALLBACK(Scr::CbDumpCommands), "dumpall", "s");
     }
 }

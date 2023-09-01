@@ -36,10 +36,23 @@ namespace a2c
         char pad_031C[296]; //0x031C
     }; //Size: 0x0444
 
+    struct COMMAND_STRUCT
+    {
+        uint32_t a0;
+        const char* Name;
+        uint32_t a2;
+        uint32_t a3;
+        uint32_t a4;
+        void(*Callback)();
+        uint32_t Signature;
+    };
+
     using namespace a2c::literals;
 
     inline Symbol<LOCAL_PLAYER> LocalPlayer(*(uintptr_t*)0x18AC00_r);
     const Symbol<void*> SDL_Window(0x585870);
+    const Symbol<void*> CommandHashmap(0x583828);
+    const Symbol<COMMAND_STRUCT*(const char** key)> CommandHashmapFind(0x26800_r);
     const Symbol<void(void(*Callback)(), const char* Name, const char* Signature)> RegisterConsoleCommand(0xD69C0_r);
     const Symbol<void(const char* OutputString)> GameConOut(0xDAD50_r);
 
