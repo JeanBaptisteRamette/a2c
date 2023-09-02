@@ -3,8 +3,9 @@
 
 #include <windows.h>
 #include <cstdint>
+#include "mindef.hpp"
 
-#define RELOCATE(RVA) (uintptr_t)(PebImageBase() + (RVA))
+#define RELOCATE(RVA) (UPTR)(PebImageBase() + (RVA))
 
 namespace a2c
 {

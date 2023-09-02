@@ -38,23 +38,26 @@ namespace a2c
 
     struct COMMAND_STRUCT
     {
-        uint32_t a0;
+        UINT32 a0;
         const char* Name;
-        uint32_t a2;
-        uint32_t a3;
-        uint32_t a4;
+        UINT32 a2;
+        UINT32 a3;
+        UINT32 a4;
         void(*Callback)();
-        uint32_t Signature;
+        UINT32 Signature;
     };
 
     using namespace a2c::literals;
 
-    inline Symbol<LOCAL_PLAYER> LocalPlayer(*(uintptr_t*)0x18AC00_r);
+    // Variables
+    inline Symbol<LOCAL_PLAYER> LocalPlayer(*(UPTR*)0x18AC00_r);
     const Symbol<void*> SDL_Window(0x585870);
     const Symbol<void*> CommandHashmap(0x583828);
-    const Symbol<COMMAND_STRUCT*(const char** key)> CommandHashmapFind(0x26800_r);
+
+    // Functions
+    const Symbol<COMMAND_STRUCT*(const char** Key)> CommandHashmapFind(0x26800_r);
     const Symbol<void(void(*Callback)(), const char* Name, const char* Signature)> RegisterConsoleCommand(0xD69C0_r);
-    const Symbol<void(const char* OutputString)> GameConOut(0xDAD50_r);
+    const Symbol<void(const char* Fmt)> GameConOut(0xDAD50_r);
 
     template<typename ...Args>
     inline void PrintGameConsole(std::string_view fmt, Args&&... args)

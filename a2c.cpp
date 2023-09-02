@@ -2,16 +2,12 @@
 #include "structs.hpp"
 #include "console.hpp"
 #include "memory.hpp"
-#include "detour.hpp"
 #include "utils.hpp"
 #include "mods.hpp"
 
 
 using namespace std::chrono_literals;
 using namespace a2c::literals;
-
-
-a2c::Detour DetourGameConOut(0xDAD50_r, (uintptr_t)a2c::Hks::StubGameConOut);
 
 
 DWORD WINAPI ThreadEntry(HMODULE HandleModule)
@@ -21,14 +17,14 @@ DWORD WINAPI ThreadEntry(HMODULE HandleModule)
     if (!ConsoleCreate())
         return 1;
 
-    LogFmtString("ImageBase:   {}\n", (void*)PebImageBase());
-    LogFmtString("PlayerBase:  {}\n", (void*)LocalPlayer.Pointer());
+    LogFmtString("ImageBase:   {}\n", (LPVOID)PebImageBase());
+    LogFmtString("PlayerBase:  {}\n", (LPVOID)LocalPlayer.Pointer());
 
     SetWindowTitle("AC Mod");
     PrintGameConsole("Hello from a2c.dll");
     ExtendScriptCommands();
 
-    DetourGameConOut.Install();
+    Hks::DetourCommandsHashmapFind.Install();
 
     while (true)
     {

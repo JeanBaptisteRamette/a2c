@@ -2,15 +2,21 @@
 #include "utils.hpp"
 #include "mods.hpp"
 
+
 #define CMD_CALLBACK(f) (void(*)())(f)
+
 
 using namespace a2c::literals;
 
+
 namespace a2c::Hks
 {
-    void StubGameConOut(const char* OutputString)
+    COMMAND_STRUCT* __stdcall CommandsHashmapFind(const char** Key)
     {
-        LogFmtString("GameConOut: {}\n", OutputString);
+        if (Key && *Key)
+            LogFmtString("CommandsHashmapFind: Key = {}\n", *Key);
+
+        return DetourCommandsHashmapFind.Invoke<COMMAND_STRUCT*>(Key);
     }
 }
 

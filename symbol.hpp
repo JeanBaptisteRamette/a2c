@@ -3,6 +3,7 @@
 
 
 #include <cstdint>
+#include "mindef.hpp"
 
 
 namespace a2c
@@ -13,25 +14,30 @@ namespace a2c
         class BaseSymbol
         {
         public:
-            BaseSymbol(uintptr_t SymAddr) : SymAddress(SymAddr) {}
+            BaseSymbol(UPTR SymAddr) : SymAddress(SymAddr) {}
 
-            T* Pointer() const
+            [[nodiscard]] UPTR Address() const
+            {
+                return SymAddress;
+            }
+
+            [[nodiscard]] T* Pointer() const
             {
                 return reinterpret_cast<T*>(SymAddress);
             }
 
-            explicit operator T *() const
+            [[nodiscard]] explicit operator T *() const
             {
                 return Pointer();
             }
 
-            T* operator -> () const
+            [[nodiscard]] T* operator -> () const
             {
                 return Pointer();
             }
 
         private:
-            uintptr_t SymAddress;
+            UPTR SymAddress;
         };
     }
 

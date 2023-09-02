@@ -3,13 +3,17 @@
 
 
 #include <string_view>
+#include "detour.hpp"
+#include "memory.hpp"
 
 
 namespace a2c
 {
     namespace Hks
     {
-        void StubGameConOut(const char* OutputString);
+        COMMAND_STRUCT* __stdcall CommandsHashmapFind(const char** Key);
+
+        inline Detour DetourCommandsHashmapFind(a2c::CommandHashmapFind, (UPTR)CommandsHashmapFind);
     }
 
     void SetWindowTitle(std::string_view Title);

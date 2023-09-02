@@ -10,4 +10,4 @@ add_library(a2c SHARED
         memory.hpp
         utils.hpp
         symbol.hpp
-        mods.hpp mods.cpp detour.cpp detour.hpp)
+        mods.hpp mods.cpp detour.hpp mindef.hpp)
